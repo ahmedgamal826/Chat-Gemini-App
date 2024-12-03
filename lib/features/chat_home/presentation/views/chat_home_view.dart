@@ -6,8 +6,8 @@ class ChatHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Chat With Gemini'),
+      body: Center(
+        child: Text('Chat'),
       ),
     );
   }
