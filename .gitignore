@@ -44,4 +44,4 @@ app.*.map.json
 
 
 # Hide api key
-api_services.dart
+lib/features/chat_home/data/services/api_services.dart
