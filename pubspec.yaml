@@ -55,6 +55,19 @@ dev_dependencies:
   hive_generator: ^2.0.1
   build_runner: ^2.4.13
 
+  flutter_launcher_icons: "^0.14.1"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/app_logo.png"
+  adaptive_icon_background: "#ffffff" # You can use a color or image for the background
+  adaptive_icon_foreground: "assets/app_logo.png" # For adaptive icons on Android
+
+   
+  
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
