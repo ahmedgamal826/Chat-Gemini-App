@@ -14,8 +14,8 @@ class SplashView extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.deepOrangeAccent[100],
-        ),
+            // color: Colors.deepOrangeAccent[100],
+            ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

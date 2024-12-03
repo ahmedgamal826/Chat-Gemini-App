@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
-            label: 'History',
+            label: 'Chat History',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
