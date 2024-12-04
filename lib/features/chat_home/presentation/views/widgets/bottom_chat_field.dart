@@ -50,6 +50,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
     } catch (e) {
       log('error : $e' as num);
     } finally {
+      widget.chatProvider.setFileListImages(listValue: []);
       controller.clear();
       focusNode.unfocus();
     }
@@ -65,7 +66,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
   @override
   Widget build(BuildContext context) {
     bool hasImages = widget.chatProvider.imagesFileList != null &&
-        widget.chatProvider.imagesFileList.isNotEmpty;
+        widget.chatProvider.imagesFileList!.isNotEmpty;
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -79,14 +80,17 @@ class _BottomChatFieldState extends State<BottomChatField> {
         ),
         child: Column(
           children: [
-            if (hasImages) ImagesPreviewWidget(),
+            if (hasImages)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ImagesPreviewWidget(),
+              ),
             Row(
               children: [
                 IconButton(
                   onPressed: () {
                     if (hasImages) {
                       // show delete dialog to delete image
-
                       showDeleteDialog(
                         context: context,
                         onConfirm: () {
@@ -113,7 +117,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                         sendChatMesage(
                           message: controller.text,
                           chatProvider: widget.chatProvider,
-                          isTextOnly: true,
+                          isTextOnly: hasImages ? false : true,
                         );
                       }
                     },
@@ -132,7 +136,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                       sendChatMesage(
                         message: controller.text,
                         chatProvider: widget.chatProvider,
-                        isTextOnly: true,
+                        isTextOnly: hasImages ? false : true,
                       );
                     }
                   },

@@ -10,7 +10,7 @@ void showDeleteDialog({
     dialogType: DialogType.question,
     animType: AnimType.topSlide,
     title: 'Confirm Deletion',
-    desc: 'Are you sure you want to delete this item?',
+    desc: 'Are you sure you want to delete this image?',
     btnCancelOnPress: () {},
     btnOkOnPress: onConfirm,
     titleTextStyle: const TextStyle(
