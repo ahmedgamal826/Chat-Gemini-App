@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // تهيئة Hive
+  // init hive
   await ChatProvider.initHive();
 
   runApp(
