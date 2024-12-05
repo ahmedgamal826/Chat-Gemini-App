@@ -1,8 +1,7 @@
 import 'package:chat_with_gemini_app/features/chat_home/data/models/message.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/images_preview_widget.dart';
-import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/message_time_and_copy.dart';
+import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/row_bottom_message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 class MyMessageWidget extends StatelessWidget {
   const MyMessageWidget({super.key, required this.message});
@@ -50,7 +49,7 @@ class MyMessageWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    MessageTimeAndCopy(
+                    RowBottomMessage(
                       timeSent: message.timeSent,
                       message: message.message.toString(),
                     ),

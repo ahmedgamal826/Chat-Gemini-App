@@ -1,7 +1,5 @@
-import 'package:chat_with_gemini_app/core/widgets/custom_snack_bar.dart';
-import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/message_time_and_copy.dart';
+import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/row_bottom_message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AssistantMessageWidget extends StatelessWidget {
@@ -55,7 +53,7 @@ class AssistantMessageWidget extends StatelessWidget {
                             ),
                           ),
                     const SizedBox(height: 5),
-                    MessageTimeAndCopy(
+                    RowBottomMessage(
                       timeSent: timeSent,
                       message: message,
                     ),
