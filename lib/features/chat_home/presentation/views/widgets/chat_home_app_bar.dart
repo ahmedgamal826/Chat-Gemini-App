@@ -10,16 +10,17 @@ class ChatHomeAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Image.asset(
+          'assets/app_logo.png',
+          width: MediaQuery.of(context).size.width * 0.12,
+        ),
+        const SizedBox(width: 10),
         const Text(
           'Chat With Gemini',
           style: TextStyle(
             fontSize: 23,
+            color: Colors.white,
           ),
-        ),
-        const SizedBox(width: 10),
-        Image.asset(
-          'assets/app_logo.png',
-          width: MediaQuery.of(context).size.width * 0.12,
         ),
       ],
     );

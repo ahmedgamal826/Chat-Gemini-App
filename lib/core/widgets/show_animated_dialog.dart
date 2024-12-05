@@ -1,16 +1,18 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
-void showDeleteDialog({
+void showAnimatedDialog({
+  required String title,
   required BuildContext context,
   required VoidCallback onConfirm,
+  required String description,
 }) {
   AwesomeDialog(
     context: context,
     dialogType: DialogType.question,
     animType: AnimType.topSlide,
-    title: 'Confirm Deletion',
-    desc: 'Are you sure you want to delete this image?',
+    title: title,
+    desc: description,
     btnCancelOnPress: () {},
     btnOkOnPress: onConfirm,
     titleTextStyle: const TextStyle(

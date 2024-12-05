@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:chat_with_gemini_app/core/provider/chat_provider.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/images_preview_widget.dart';
-import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/showDeleteDialog.dart';
+import 'package:chat_with_gemini_app/core/widgets/show_animated_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -91,7 +91,10 @@ class _BottomChatFieldState extends State<BottomChatField> {
                   onPressed: () {
                     if (hasImages) {
                       // show delete dialog to delete image
-                      showDeleteDialog(
+                      showAnimatedDialog(
+                        title: 'Confirm Deletion',
+                        description:
+                            'Are you sure you want to delete this image?',
                         context: context,
                         onConfirm: () {
                           setState(() {
@@ -126,7 +129,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      hintText: 'Type a message',
+                      hintText: 'Write a message...',
                     ),
                   ),
                 ),
@@ -142,7 +145,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple,
+                      color: const Color(0xff0EA385),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     margin: const EdgeInsets.all(5),

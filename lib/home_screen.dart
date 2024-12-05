@@ -1,7 +1,9 @@
+import 'package:chat_with_gemini_app/core/provider/chat_provider.dart';
 import 'package:chat_with_gemini_app/features/profile/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_with_gemini_app/features/chat_history/presentation/views/chat_history_view.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/chat_home_view.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,43 +36,39 @@ class _HomeScreenState extends State<HomeScreen> {
       const ProfileView()
     ];
 
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: pages,
-        onPageChanged: (value) {
-          setState(() {
-            _currentIndex = value;
-          });
-        },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'Chat History',
+    return Consumer<ChatProvider>(
+      builder: (context, chatProvider, child) {
+        return Scaffold(
+          body: pages[chatProvider.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: const Color(0xff0EA385),
+            currentIndex: chatProvider.currentIndex,
+            onTap: (index) {
+              chatProvider.setCurrentIndex(newCurrentIndex: index);
+            },
+            selectedItemColor: Colors.white,
+            items: const [
+              BottomNavigationBarItem(
+                backgroundColor: Color(0xff74AA9C),
+                icon: Icon(Icons.history),
+                label: 'Chat History',
+              ),
+              BottomNavigationBarItem(
+                backgroundColor: Colors.white,
+                icon: Icon(Icons.chat),
+                label: 'Chat',
+              ),
+              BottomNavigationBarItem(
+                backgroundColor: Colors.white,
+                icon: Icon(
+                  Icons.person,
+                ),
+                label: 'Profile',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

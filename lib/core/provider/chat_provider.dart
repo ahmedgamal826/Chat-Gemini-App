@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:chat_with_gemini_app/core/constants/constants.dart';
+import 'package:chat_with_gemini_app/core/hive/boxes.dart';
 import 'package:chat_with_gemini_app/core/hive/chat_history.dart';
 import 'package:chat_with_gemini_app/core/hive/settings.dart';
 import 'package:chat_with_gemini_app/core/hive/user_model.dart';
@@ -16,7 +17,7 @@ class ChatProvider extends ChangeNotifier {
   // Variables
   List<Message> _messagesInChats = [];
 
-  final PageController _pageController = PageController();
+  // final PageController _pageController = PageController();
 
   List<XFile>? _imagesFileList = [];
 
@@ -38,7 +39,7 @@ class ChatProvider extends ChangeNotifier {
 
   List<Message> get messagesInChat => _messagesInChats;
 
-  PageController get pageController => _pageController;
+  // PageController get pageController => _pageController;
 
   List<XFile>? get imagesFileList => _imagesFileList;
 
@@ -250,14 +251,50 @@ class ChatProvider extends ChangeNotifier {
             .write(event.text);
         notifyListeners();
       },
-      onDone: () {
+      onDone: () async {
         // save message to hive database
+
+        await saveMessageToDatabase(
+          chatId: chatId,
+          userMessage: userMessage,
+          assistantMessage: assistantMessage,
+          messagesBox: messagesBox,
+        );
 
         setLoading(value: false);
       },
     ).onError((error, stackTrace) {
       setLoading(value: false);
     });
+  }
+
+  // Save message in database
+  Future<void> saveMessageToDatabase({
+    required String chatId,
+    required Message userMessage,
+    required Message assistantMessage,
+    required Box messagesBox,
+  }) async {
+    // save user messages in hive database
+    await messagesBox.add(userMessage.toMap());
+
+    // save assistant message in hive database
+    await messagesBox.add(assistantMessage.toMap());
+
+    final chatHistoryBox = Boxes.getChatHistory();
+
+    final chatHistory = ChatHistory(
+      chatId: chatId,
+      prompt: userMessage.message.toString(),
+      response: assistantMessage.message.toString(),
+      imagesUrls: userMessage.imagesUrls,
+      timestamp: DateTime.now(),
+    );
+
+    await chatHistoryBox.put(chatId, chatHistory);
+
+    // close the box
+    await messagesBox.close();
   }
 
   Future<Content> getContent({
@@ -320,6 +357,57 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
+  // Delete Chat Message
+
+  Future<void> deleteMessages({required String chatId}) async {
+    if (!Hive.isBoxOpen('${Constants.chatMessageBox}$chatId')) {
+      Hive.openBox('${Constants.chatMessageBox}$chatId');
+
+      Hive.box('${Constants.chatMessageBox}$chatId').clear();
+
+      Hive.box('${Constants.chatMessageBox}$chatId').close();
+    }
+
+    // delete all chat messages
+    else {
+      Hive.box('${Constants.chatMessageBox}$chatId').clear();
+      Hive.box('${Constants.chatMessageBox}$chatId').close();
+    }
+
+    if (chatCurrentId.isNotEmpty) {
+      if (chatCurrentId == chatId) {
+        setCurrentChatId(newChatId: '');
+        _messagesInChats.clear();
+        notifyListeners();
+      }
+    }
+  }
+
+  // prepare chat room to new chat or navigate chat history to chat room
+  Future<void> prepareChatRoom({
+    required String chatId,
+    required bool newChat,
+  }) async {
+    if (!newChat) {
+      // navigate chat history to chat room
+      // load messages from database
+      final chatHistory = await loadMessagesFromDB(chatId: chatId);
+
+      // delete chat messages
+      _messagesInChats.clear();
+
+      for (var message in chatHistory) {
+        _messagesInChats.add(message);
+      }
+
+      setCurrentChatId(newChatId: chatId);
+    } else {
+      // prepare chat room to new chat
+      _messagesInChats.clear();
+      setCurrentChatId(newChatId: chatId);
+    }
+  }
+
   // Initialize Hive
   static initHive() async {
     final dir = await path.getApplicationDocumentsDirectory();
@@ -327,17 +415,17 @@ class ChatProvider extends ChangeNotifier {
 
     await Hive.initFlutter(Constants.geminiDB);
 
-    if (Hive.isAdapterRegistered(0)) {
+    if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(ChatHistoryAdapter());
       await Hive.openBox<ChatHistory>(Constants.chatHistoryBox);
     }
 
-    if (Hive.isAdapterRegistered(1)) {
+    if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(UserModelAdapter());
       await Hive.openBox<UserModel>(Constants.userModelBox);
     }
 
-    if (Hive.isAdapterRegistered(2)) {
+    if (!Hive.isAdapterRegistered(2)) {
       Hive.registerAdapter(SettingsAdapter());
       await Hive.openBox<Settings>(Constants.settingsBox);
     }

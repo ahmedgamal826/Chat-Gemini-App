@@ -24,9 +24,9 @@ class MyMessageWidget extends StatelessWidget {
                 constraints: BoxConstraints(
                   maxWidth: width * 0.5,
                 ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                  color: Color(0xff74AA9C),
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
@@ -41,14 +41,20 @@ class MyMessageWidget extends StatelessWidget {
                         message: message,
                       ),
                     const SizedBox(height: 8),
-                    MarkdownBody(
-                      selectable: true,
-                      data: message.message.toString(),
+                    SelectableText(
+                      message.message.toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
                     const SizedBox(height: 5),
                     Text(
                       _formatTime(message.timeSent),
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),

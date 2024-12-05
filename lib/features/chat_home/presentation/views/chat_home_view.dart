@@ -1,4 +1,5 @@
 import 'package:chat_with_gemini_app/core/provider/chat_provider.dart';
+import 'package:chat_with_gemini_app/core/widgets/show_animated_dialog.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/bottom_chat_field.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/chat_home_app_bar.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/chat_messages_list.dart';
@@ -52,8 +53,41 @@ class _ChatHomeViewState extends State<ChatHomeView> {
 
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: const Color(0xff0EA385),
             centerTitle: true,
             title: const ChatHomeAppBar(),
+            actions: [
+              if (chatProvider.messagesInChat.isNotEmpty)
+                IconButton(
+                  onPressed: () {
+                    // start new chat
+                    showAnimatedDialog(
+                      title: 'Confirm Addition',
+                      context: context,
+                      description:
+                          'Are you sure you want to start a new chat with gemini?',
+                      onConfirm: () {
+                        setState(() {
+                          // start new chat
+                          chatProvider.prepareChatRoom(
+                            chatId: '',
+                            newChat: true,
+                          );
+                        });
+                      },
+                    );
+                  },
+                  icon: const CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 17,
+                    child: Icon(
+                      Icons.add,
+                      size: 30,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+            ],
           ),
           body: SafeArea(
             child: Padding(

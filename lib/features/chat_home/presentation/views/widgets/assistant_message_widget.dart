@@ -25,9 +25,9 @@ class AssistantMessageWidget extends StatelessWidget {
                 constraints: BoxConstraints(
                   maxWidth: width * 0.9,
                 ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceVariant,
-                  borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                  color: Color(0xff0EA385),
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                     bottomRight: Radius.circular(20),
@@ -41,15 +41,24 @@ class AssistantMessageWidget extends StatelessWidget {
                         ? const SizedBox(
                             width: 50,
                             child: SpinKitThreeBounce(
-                              color: Colors.blueGrey,
+                              color: Colors.white,
                               size: 20,
                             ),
                           )
-                        : MarkdownBody(selectable: true, data: message),
+                        : SelectableText(
+                            message.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
                     const SizedBox(height: 5),
                     Text(
                       _formatTime(timeSent),
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
