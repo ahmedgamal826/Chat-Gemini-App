@@ -15,7 +15,7 @@ class AnimatedText extends StatelessWidget {
           textStyle: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: Colors.white,
             shadows: [
               Shadow(
                 color: Colors.black26,

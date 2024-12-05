@@ -41,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
         return Scaffold(
           body: pages[chatProvider.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: const Color(0xff0EA385),
+            backgroundColor: const Color(0xff0089F7),
+
+            // backgroundColor: Colors.black,
             currentIndex: chatProvider.currentIndex,
             onTap: (index) {
               chatProvider.setCurrentIndex(newCurrentIndex: index);
@@ -49,19 +51,25 @@ class _HomeScreenState extends State<HomeScreen> {
             selectedItemColor: Colors.white,
             items: const [
               BottomNavigationBarItem(
-                backgroundColor: Color(0xff74AA9C),
-                icon: Icon(Icons.history),
+                icon: Icon(
+                  Icons.history,
+                  size: 30,
+                ),
                 label: 'Chat History',
               ),
               BottomNavigationBarItem(
                 backgroundColor: Colors.white,
-                icon: Icon(Icons.chat),
+                icon: Icon(
+                  Icons.chat,
+                  size: 30,
+                ),
                 label: 'Chat',
               ),
               BottomNavigationBarItem(
                 backgroundColor: Colors.white,
                 icon: Icon(
                   Icons.person,
+                  size: 30,
                 ),
                 label: 'Profile',
               ),

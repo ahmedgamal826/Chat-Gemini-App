@@ -145,7 +145,8 @@ class _BottomChatFieldState extends State<BottomChatField> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xff0EA385),
+                      color: const Color(0xff1E1E1E),
+                      // color: const Color(0xff0EA385),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     margin: const EdgeInsets.all(5),

@@ -16,10 +16,17 @@ class _ChatHistoryViewState extends State<ChatHistoryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff1E1E1E),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        backgroundColor: const Color(0xff1E1E1E),
         centerTitle: true,
-        title: const Text('Chat History'),
+        title: const Text(
+          'Chat History',
+          style: TextStyle(
+            fontSize: 25,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: ValueListenableBuilder<Box<ChatHistory>>(
         valueListenable: Boxes.getChatHistory().listenable(),

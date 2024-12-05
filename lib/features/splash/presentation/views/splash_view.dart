@@ -12,6 +12,7 @@ class SplashView extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: const Color(0xff1E1E1E),
       body: Container(
         child: Center(
           child: Column(

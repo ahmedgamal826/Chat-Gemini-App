@@ -1,7 +1,7 @@
 import 'package:chat_with_gemini_app/core/hive/chat_history.dart';
 import 'package:chat_with_gemini_app/core/provider/chat_provider.dart';
 import 'package:chat_with_gemini_app/core/widgets/show_animated_dialog.dart';
-import 'package:chat_with_gemini_app/features/chat_history/presentation/views/widgets/custom_snack_bar.dart';
+import 'package:chat_with_gemini_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -43,16 +43,15 @@ class ChatHistoryCard extends StatelessWidget {
         );
       },
       child: Card(
-        elevation: 5, // Adds shadow for depth
+        elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: const Color(0xff0EA385), // Greenish blue background color
+        color: const Color(0xff0089F7),
         child: ListTile(
-          contentPadding:
-              const EdgeInsets.all(12), // Padding for the card content
+          contentPadding: const EdgeInsets.all(12),
           leading: const Icon(
             Icons.chat,
             size: 30,
-            color: Colors.white, // Icon color
+            color: Colors.white,
           ),
           title: Text(
             chatHistory.prompt,

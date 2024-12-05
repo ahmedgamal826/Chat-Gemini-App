@@ -1,5 +1,6 @@
 import 'package:chat_with_gemini_app/features/chat_home/data/models/message.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/images_preview_widget.dart';
+import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/message_time_and_copy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -22,10 +23,10 @@ class MyMessageWidget extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20),
               child: Container(
                 constraints: BoxConstraints(
-                  maxWidth: width * 0.5,
+                  maxWidth: width * 0.8,
                 ),
                 decoration: const BoxDecoration(
-                  color: Color(0xff74AA9C),
+                  color: Color(0xff72CEF8),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topLeft: Radius.circular(20),
@@ -44,17 +45,14 @@ class MyMessageWidget extends StatelessWidget {
                     SelectableText(
                       message.message.toString(),
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 20,
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      _formatTime(message.timeSent),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    MessageTimeAndCopy(
+                      timeSent: message.timeSent,
+                      message: message.message.toString(),
                     ),
                   ],
                 ),
@@ -72,16 +70,5 @@ class MyMessageWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _formatTime(DateTime time) {
-    int hour = time.hour % 12; // تحويل الساعة إلى صيغة 12 ساعة
-    hour = hour == 0 ? 12 : hour; // إذا كانت الساعة 0، يتم تحويلها إلى 12
-    String minute = time.minute
-        .toString()
-        .padLeft(2, '0'); // إضافة صفر أمام الدقائق إذا كانت أقل من 10
-    String period = time.hour < 12 ? 'AM' : 'PM'; // تحديد ما إذا كان AM أو PM
-
-    return "$hour:$minute $period";
   }
 }

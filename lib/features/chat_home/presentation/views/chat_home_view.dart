@@ -52,8 +52,9 @@ class _ChatHomeViewState extends State<ChatHomeView> {
         });
 
         return Scaffold(
+          backgroundColor: const Color(0xff1E1E1E),
           appBar: AppBar(
-            backgroundColor: const Color(0xff0EA385),
+            backgroundColor: const Color(0xff1E1E1E),
             centerTitle: true,
             title: const ChatHomeAppBar(),
             actions: [
