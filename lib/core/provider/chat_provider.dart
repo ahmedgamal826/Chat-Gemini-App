@@ -8,6 +8,7 @@ import 'package:chat_with_gemini_app/features/chat_home/data/models/message.dart
 import 'package:chat_with_gemini_app/features/chat_home/data/services/api_services.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:image_picker/image_picker.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -148,6 +149,11 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Define _formatDateTime here
+  String _formatDateTime(DateTime dateTime) {
+    final DateFormat dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+    return dateFormat.format(dateTime);
+  }
   // send message to model
 
   Future<void> sendMessage({
@@ -174,6 +180,9 @@ class ChatProvider extends ChangeNotifier {
     // assistant messageId
     final assistantMessageId = messagesBox.keys.length + 1;
 
+    // Get current DateTime and format it
+    String formattedTime =
+        _formatDateTime(DateTime.now()); // Call your formatting function
     // // // user message id
     // final userMessageId = const Uuid().v4();
     // user message
@@ -183,7 +192,7 @@ class ChatProvider extends ChangeNotifier {
       role: Role.user,
       message: StringBuffer(message),
       imagesUrls: imagesUrls,
-      timeSent: DateTime.now(),
+      timeSent: formattedTime,
     );
 
     // add user message in list on chat screen
@@ -228,11 +237,16 @@ class ChatProvider extends ChangeNotifier {
     // user message id
     final modelMessageId = const Uuid().v4();
 
+    // Get current DateTime and format it
+    DateTime currentTime = DateTime.now();
+    String formattedTime =
+        _formatDateTime(currentTime); // Call your formatting function
+
     final assistantMessage = userMessage.copyWith(
       messageId: modelMessageId,
       role: Role.assistant,
       message: StringBuffer(),
-      timeSent: DateTime.now(),
+      timeSent: formattedTime,
     );
 
     // add this message to the list on message in chat

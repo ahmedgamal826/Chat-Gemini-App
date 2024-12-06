@@ -1,3 +1,4 @@
+import 'package:chat_with_gemini_app/features/chat_home/data/models/message.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/row_bottom_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,7 +8,7 @@ class AssistantMessageWidget extends StatelessWidget {
       {super.key, required this.message, required this.timeSent});
 
   final String message;
-  final DateTime timeSent;
+  final String timeSent;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class AssistantMessageWidget extends StatelessWidget {
                   maxWidth: width * 0.9,
                 ),
                 decoration: const BoxDecoration(
-                  color: Color(0xff0089F7),
+                  color: Color.fromARGB(255, 47, 44, 44),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
@@ -54,6 +55,7 @@ class AssistantMessageWidget extends StatelessWidget {
                           ),
                     const SizedBox(height: 5),
                     RowBottomMessage(
+                      role: Role.assistant,
                       timeSent: timeSent,
                       message: message,
                     ),

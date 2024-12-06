@@ -3,6 +3,7 @@ import 'package:chat_with_gemini_app/core/widgets/show_animated_dialog.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/bottom_chat_field.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/chat_home_app_bar.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/chat_messages_list.dart';
+import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/no_chats_messages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -97,15 +98,7 @@ class _ChatHomeViewState extends State<ChatHomeView> {
                 children: [
                   Expanded(
                     child: chatProvider.messagesInChat.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'No message yet',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          )
+                        ? const NoChatMessages()
                         : ChatMessagesList(
                             scrollController: _scrollController,
                             chatProvider: chatProvider,

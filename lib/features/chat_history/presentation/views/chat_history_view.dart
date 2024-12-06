@@ -25,14 +25,19 @@ class _ChatHistoryViewState extends State<ChatHistoryView> {
           style: TextStyle(
             fontSize: 25,
             color: Colors.white,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
       body: ValueListenableBuilder<Box<ChatHistory>>(
         valueListenable: Boxes.getChatHistory().listenable(),
         builder: (context, box, _) {
-          final chatHistory =
-              box.values.toList().cast<ChatHistory>().reversed.toList();
+          // Get the chat history and sort it by timestamp (ascending order)
+          final chatHistory = box.values.toList().cast<ChatHistory>()
+            ..sort((a, b) =>
+                b.timestamp.compareTo(a.timestamp)); // Sort by timestamp (date)
+
           return chatHistory.isEmpty
               ? const EmptyHistoryWidget()
               : Padding(

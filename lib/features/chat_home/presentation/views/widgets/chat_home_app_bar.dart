@@ -18,8 +18,10 @@ class ChatHomeAppBar extends StatelessWidget {
         const Text(
           'Chat With Gemini',
           style: TextStyle(
-            fontSize: 23,
+            fontSize: 25,
             color: Colors.white,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ],

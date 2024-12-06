@@ -25,7 +25,7 @@ class MyMessageWidget extends StatelessWidget {
                   maxWidth: width * 0.8,
                 ),
                 decoration: const BoxDecoration(
-                  color: Color(0xff72CEF8),
+                  color: Color.fromARGB(255, 249, 248, 248),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topLeft: Radius.circular(20),
@@ -50,7 +50,8 @@ class MyMessageWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     RowBottomMessage(
-                      timeSent: message.timeSent,
+                      role: Role.user,
+                      timeSent: message.timeSent.toString(),
                       message: message.message.toString(),
                     ),
                   ],

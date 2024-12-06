@@ -1,9 +1,9 @@
 import 'package:chat_with_gemini_app/core/hive/chat_history.dart';
 import 'package:chat_with_gemini_app/core/provider/chat_provider.dart';
+import 'package:chat_with_gemini_app/core/services/formatted_date_and_time_services.dart';
 import 'package:chat_with_gemini_app/core/widgets/show_animated_dialog.dart';
 import 'package:chat_with_gemini_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ChatHistoryCard extends StatelessWidget {
@@ -13,8 +13,8 @@ class ChatHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedTime = DateFormat('hh:mm a').format(chatHistory.timestamp);
-
+    final FormattedDateAndTimeServices formattedDate =
+        FormattedDateAndTimeServices();
     return InkWell(
       onTap: () {
         // Navigate to chat home view when tapped
@@ -45,7 +45,7 @@ class ChatHistoryCard extends StatelessWidget {
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: const Color(0xff0089F7),
+        color: const Color.fromARGB(255, 47, 44, 44),
         child: ListTile(
           contentPadding: const EdgeInsets.all(12),
           leading: const Icon(
@@ -74,11 +74,9 @@ class ChatHistoryCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
               Text(
-                formattedTime,
+                formattedDate.formatDate(chatHistory.timestamp.toString()),
                 style: const TextStyle(
-                  fontSize: 14,
                   color: Colors.white,
                 ),
               ),
