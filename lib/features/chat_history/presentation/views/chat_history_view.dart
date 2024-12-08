@@ -2,8 +2,10 @@ import 'package:chat_with_gemini_app/core/hive/boxes.dart';
 import 'package:chat_with_gemini_app/core/hive/chat_history.dart';
 import 'package:chat_with_gemini_app/features/chat_history/presentation/views/widgets/chat_history_card.dart';
 import 'package:chat_with_gemini_app/features/chat_history/presentation/views/widgets/empty_history_widget.dart';
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ChatHistoryView extends StatefulWidget {
   const ChatHistoryView({super.key});
@@ -15,10 +17,14 @@ class ChatHistoryView extends StatefulWidget {
 class _ChatHistoryViewState extends State<ChatHistoryView> {
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<ProfileProvider>(context);
     return Scaffold(
-      backgroundColor: const Color(0xff1E1E1E),
+      backgroundColor:
+          profileProvider.isDarkMode ? const Color(0xff1E1E1E) : Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xff1E1E1E),
+        backgroundColor: profileProvider.isDarkMode
+            ? const Color(0xff1E1E1E)
+            : Colors.blueAccent.withOpacity(0.8),
         centerTitle: true,
         title: const Text(
           'Chat History',

@@ -1,7 +1,9 @@
 import 'package:chat_with_gemini_app/features/chat_home/data/models/message.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/images_preview_widget.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/row_bottom_message.dart';
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyMessageWidget extends StatelessWidget {
   const MyMessageWidget({super.key, required this.message});
@@ -11,6 +13,8 @@ class MyMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
     return Align(
       alignment: Alignment.centerRight,
       child: Padding(
@@ -24,9 +28,11 @@ class MyMessageWidget extends StatelessWidget {
                 constraints: BoxConstraints(
                   maxWidth: width * 0.8,
                 ),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 249, 248, 248),
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: profileProvider.isDarkMode
+                      ? const Color.fromARGB(255, 249, 248, 248)
+                      : Colors.blueAccent.withOpacity(0.8),
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
@@ -43,8 +49,10 @@ class MyMessageWidget extends StatelessWidget {
                     const SizedBox(height: 8),
                     SelectableText(
                       message.message.toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: profileProvider.isDarkMode
+                            ? Colors.black
+                            : Colors.white,
                         fontSize: 20,
                       ),
                     ),

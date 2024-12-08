@@ -3,8 +3,10 @@ import 'package:chat_with_gemini_app/core/services/formatted_date_and_time_servi
 import 'package:chat_with_gemini_app/core/widgets/custom_snack_bar.dart';
 import 'package:chat_with_gemini_app/features/chat_home/data/models/message.dart';
 import 'package:chat_with_gemini_app/features/chat_home/data/services/sound_services.dart';
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class RowBottomMessage extends StatefulWidget {
   const RowBottomMessage({
@@ -23,76 +25,84 @@ class RowBottomMessage extends StatefulWidget {
 }
 
 class _RowBottomMessageState extends State<RowBottomMessage> {
-  final SoundService _soundService = SoundService();
   final FormattedDateAndTimeServices _formattedDateAndTimeServices =
       FormattedDateAndTimeServices();
 
-  // Method to handle the state change of sound playing
-  void _toggleSound() async {
-    if (_soundService.isPlaying) {
-      await _soundService.stop();
-    } else {
-      await _soundService.speak(widget.message);
-    }
-    setState(() {}); // Update the UI to reflect the change
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Use Expanded to allow the text to take available space without overflow
-        Expanded(
-          child: AutoSizeText(
-            _formattedDateAndTimeServices.formatDateTime(widget.timeSent),
-            style: const TextStyle(
-              color: Color.fromARGB(255, 172, 164, 164),
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
-              fontSize: 15,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Row(
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
+    return Consumer<SoundService>(
+      builder: (context, soundService, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (widget.role == Role.assistant)
-              IconButton(
-                onPressed: _toggleSound, // Use the method to toggle sound
-                icon: Icon(
-                  _soundService.isPlaying ? Icons.stop : Icons.volume_up,
-                  color: widget.role == Role.assistant
-                      ? Colors.white
-                      : Colors.black,
-                  size: 22,
+            Expanded(
+              child: AutoSizeText(
+                _formattedDateAndTimeServices.formatDateTime(widget.timeSent),
+                style: TextStyle(
+                  color: profileProvider.isDarkMode
+                      ? Color.fromARGB(255, 172, 164, 164)
+                      : const Color.fromARGB(255, 250, 233, 233),
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 15,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            IconButton(
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: widget.message));
-                CustomSnackBar.showSuccessSnackBar(
-                  context,
-                  'Message copied to clipboard!',
-                );
-              },
-              icon: Icon(
-                Icons.copy,
-                color:
-                    widget.role == Role.assistant ? Colors.white : Colors.black,
-                size: 22,
-              ),
+            ),
+            Row(
+              children: [
+                if (widget.role == Role.assistant)
+                  IconButton(
+                    onPressed: () async {
+                      if (soundService.isPlaying(widget.message)) {
+                        await soundService.stop(widget.message);
+                      } else {
+                        await soundService.speak(
+                            widget.message, widget.message);
+                      }
+                    },
+                    icon: Icon(
+                      soundService.isPlaying(widget.message)
+                          ? Icons.stop
+                          : Icons.volume_up,
+                      color: widget.role == Role.assistant
+                          ? Colors.white
+                          : Colors.black,
+                      size: 22,
+                    ),
+                  ),
+                IconButton(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: widget.message));
+                    CustomSnackBar.showSuccessSnackBar(
+                      context,
+                      'Message copied to clipboard!',
+                    );
+                  },
+                  icon: Icon(
+                    Icons.copy,
+                    color: widget.role == Role.assistant
+                        ? Colors.white
+                        : profileProvider.isDarkMode
+                            ? Colors.black
+                            : Colors.white,
+                    size: 22,
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 
   @override
   void dispose() {
-    _soundService.stop();
     super.dispose();
+    // لا حاجة للوصول إلى SoundService هنا، سيتم التعامل معه بواسطة Consumer
   }
 }

@@ -1,4 +1,5 @@
 import 'package:chat_with_gemini_app/core/provider/chat_provider.dart';
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:chat_with_gemini_app/features/profile/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_with_gemini_app/features/chat_history/presentation/views/chat_history_view.dart';
@@ -33,23 +34,26 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> pages = [
       const ChatHistoryView(),
       const ChatHomeView(),
-      const ProfileView()
+      ProfileView()
     ];
+    final profileProvider = Provider.of<ProfileProvider>(context);
 
     return Consumer<ChatProvider>(
       builder: (context, chatProvider, child) {
         return Scaffold(
           body: pages[chatProvider.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Color.fromARGB(255, 47, 44, 44),
-
-            // backgroundColor: Colors.black,
+            backgroundColor: profileProvider.isDarkMode
+                ? const Color.fromARGB(255, 47, 44, 44)
+                : Colors.blueAccent.withOpacity(0.8),
             currentIndex: chatProvider.currentIndex,
             onTap: (index) {
               chatProvider.setCurrentIndex(newCurrentIndex: index);
             },
             selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.grey.shade600,
+            unselectedItemColor: profileProvider.isDarkMode
+                ? Colors.grey.shade600
+                : const Color.fromARGB(255, 78, 76, 76),
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(

@@ -1,7 +1,9 @@
 import 'package:chat_with_gemini_app/features/chat_home/data/models/message.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/row_bottom_message.dart';
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
 class AssistantMessageWidget extends StatelessWidget {
   const AssistantMessageWidget(
@@ -13,6 +15,8 @@ class AssistantMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
@@ -26,9 +30,11 @@ class AssistantMessageWidget extends StatelessWidget {
                 constraints: BoxConstraints(
                   maxWidth: width * 0.9,
                 ),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 47, 44, 44),
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: profileProvider.isDarkMode
+                      ? Color.fromARGB(255, 47, 44, 44)
+                      : const Color.fromARGB(255, 153, 145, 145),
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                     bottomRight: Radius.circular(20),

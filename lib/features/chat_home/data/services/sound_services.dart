@@ -1,33 +1,49 @@
-// sound_service.dart
+import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-class SoundService {
+class SoundService extends ChangeNotifier {
   final FlutterTts _flutterTts = FlutterTts();
-  bool _isPlaying = false;
+  String? _currentPlayingMessage;
 
-  // دالة لتحديد اللغة والنطق
-  Future<void> speak(String text) async {
+  bool isPlaying(String message) => _currentPlayingMessage == message;
+
+  Future<void> speak(String message, String text) async {
+    if (text.isEmpty) return;
+
+    if (_currentPlayingMessage != null && _currentPlayingMessage != message) {
+      await stop(_currentPlayingMessage!);
+    }
+
     String languageCode = await _getLanguageCode(text);
+    try {
+      await _flutterTts.setLanguage(languageCode);
+      await _flutterTts.setPitch(1.0);
+      await _flutterTts.speak(text);
 
-    await _flutterTts.setLanguage(languageCode); // تعيين اللغة
-    await _flutterTts.setPitch(1.0); // تعيين مستوى الصوت
-    await _flutterTts.speak(text);
+      _currentPlayingMessage = message;
+      notifyListeners();
 
-    _isPlaying = true;
-
-    // تعيين حدث اكتمال النطق
-    _flutterTts.setCompletionHandler(() {
-      _isPlaying = false;
-    });
+      _flutterTts.setCompletionHandler(() {
+        _currentPlayingMessage = null;
+        notifyListeners();
+      });
+    } catch (e) {
+      print("Error in SoundService: $e");
+    }
   }
 
-  // دالة لإيقاف الصوت
-  Future<void> stop() async {
-    await _flutterTts.stop();
-    _isPlaying = false;
+  Future<void> stop(String message) async {
+    try {
+      await _flutterTts.stop();
+      if (_currentPlayingMessage == message) {
+        _currentPlayingMessage = null;
+      }
+      notifyListeners();
+    } catch (e) {
+      print("Error stopping sound: $e");
+    }
   }
 
-  // دالة لاكتشاف اللغة بناءً على النص
   Future<String> _getLanguageCode(String text) async {
     if (text.contains(RegExp(r'[ا-ي]'))) {
       return "ar-SA"; // اللغة العربية
@@ -73,7 +89,4 @@ class SoundService {
       return "en-US"; // الافتراضي: الإنجليزية
     }
   }
-
-  // دالة للتحقق من حالة اللعب (هل الصوت قيد التشغيل)
-  bool get isPlaying => _isPlaying;
 }

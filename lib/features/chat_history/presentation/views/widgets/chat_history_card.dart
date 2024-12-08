@@ -3,6 +3,7 @@ import 'package:chat_with_gemini_app/core/provider/chat_provider.dart';
 import 'package:chat_with_gemini_app/core/services/formatted_date_and_time_services.dart';
 import 'package:chat_with_gemini_app/core/widgets/show_animated_dialog.dart';
 import 'package:chat_with_gemini_app/core/widgets/custom_snack_bar.dart';
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,9 @@ class ChatHistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final FormattedDateAndTimeServices formattedDate =
         FormattedDateAndTimeServices();
+
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
     return InkWell(
       onTap: () {
         // Navigate to chat home view when tapped
@@ -45,7 +49,10 @@ class ChatHistoryCard extends StatelessWidget {
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: const Color.fromARGB(255, 47, 44, 44),
+        color: profileProvider.isDarkMode
+            ? Colors.grey.withOpacity(0.1)
+            // ? const Color.fromARGB(255, 47, 44, 44)
+            : Colors.blueAccent.withOpacity(0.8),
         child: ListTile(
           contentPadding: const EdgeInsets.all(12),
           leading: const Icon(

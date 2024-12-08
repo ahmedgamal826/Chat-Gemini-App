@@ -4,6 +4,7 @@ import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widge
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/chat_home_app_bar.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/chat_messages_list.dart';
 import 'package:chat_with_gemini_app/features/chat_home/presentation/views/widgets/no_chats_messages.dart';
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,8 @@ class _ChatHomeViewState extends State<ChatHomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
     return Consumer<ChatProvider>(
       builder: (context, chatProvider, child) {
         if (chatProvider.messagesInChat.isNotEmpty) {
@@ -53,9 +56,13 @@ class _ChatHomeViewState extends State<ChatHomeView> {
         });
 
         return Scaffold(
-          backgroundColor: const Color(0xff1E1E1E),
+          backgroundColor: profileProvider.isDarkMode
+              ? const Color(0xff1E1E1E)
+              : Colors.white,
           appBar: AppBar(
-            backgroundColor: const Color(0xff1E1E1E),
+            backgroundColor: profileProvider.isDarkMode
+                ? const Color(0xff1E1E1E)
+                : Colors.blueAccent.withOpacity(0.8),
             centerTitle: true,
             title: const ChatHomeAppBar(),
             actions: [
