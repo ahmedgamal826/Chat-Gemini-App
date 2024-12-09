@@ -2,7 +2,7 @@ import 'package:chat_with_gemini_app/core/widgets/custom_snack_bar.dart';
 import 'package:chat_with_gemini_app/features/profile/presentation/views/widgets/animated_image_container.dart';
 import 'package:chat_with_gemini_app/features/profile/presentation/views/widgets/animation_button.dart';
 import 'package:chat_with_gemini_app/features/profile/presentation/views/widgets/custom_text_field.dart';
-import 'package:chat_with_gemini_app/features/profile/presentation/views/widgets/switch_list_tile.dart';
+import 'package:chat_with_gemini_app/features/profile/presentation/views/widgets/custom_profile_list_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
@@ -73,7 +73,10 @@ class ProfileView extends StatelessWidget {
                   isDarkMode: profileProvider.isDarkMode,
                 ),
                 const SizedBox(height: 20),
-                BuildSwitchListTile(
+                CustomProfileListTiles(
+                  onDeleteAllPressed: () {
+                    profileProvider.clearProfileData();
+                  },
                   context,
                   title: 'Dark Mode',
                   value: profileProvider.isDarkMode,
@@ -82,7 +85,7 @@ class ProfileView extends StatelessWidget {
                   },
                   isDarkMode: profileProvider.isDarkMode,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 AnimatedButton(
                   onPressed: () async {
                     await profileProvider.saveUserData();

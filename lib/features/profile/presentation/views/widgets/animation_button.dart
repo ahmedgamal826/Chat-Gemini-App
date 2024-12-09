@@ -35,7 +35,7 @@ class AnimatedButton extends StatelessWidget {
           'Save',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),

@@ -32,9 +32,20 @@ class ProfileProvider extends ChangeNotifier {
     await userBox.put('email', email);
     if (image != null) {
       await userBox.put('imagePath', image!.path);
+    } else {
+      await userBox.delete('imagePath');
     }
     await userBox.put('isDarkMode', isDarkMode);
 
+    notifyListeners();
+  }
+
+  void clearProfileData() {
+    name = '';
+    email = '';
+    image = null;
+    isDarkMode = false;
+    saveUserData();
     notifyListeners();
   }
 
