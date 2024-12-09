@@ -16,8 +16,8 @@ class ProfileProvider extends ChangeNotifier {
 
   Future<void> _loadUserData() async {
     userBox = await Hive.openBox('userBox');
-    name = userBox.get('name', defaultValue: 'اسم المستخدم');
-    email = userBox.get('email', defaultValue: 'البريد الإلكتروني');
+    name = userBox.get('name', defaultValue: 'Username');
+    email = userBox.get('email', defaultValue: 'Email');
     final imagePath = userBox.get('imagePath', defaultValue: '');
     isDarkMode = userBox.get('isDarkMode', defaultValue: false);
 

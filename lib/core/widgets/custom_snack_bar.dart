@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomSnackBar {
@@ -12,7 +13,8 @@ class CustomSnackBar {
             ),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(
+              child: AutoSizeText(
+                maxLines: 1,
                 message,
                 style: const TextStyle(
                   color: Colors.white,

@@ -75,7 +75,7 @@ class ProfileView extends StatelessWidget {
                 const SizedBox(height: 20),
                 BuildSwitchListTile(
                   context,
-                  title: 'Light/Dark Mode',
+                  title: 'Dark Mode',
                   value: profileProvider.isDarkMode,
                   onChanged: (value) {
                     profileProvider.toggleDarkMode();

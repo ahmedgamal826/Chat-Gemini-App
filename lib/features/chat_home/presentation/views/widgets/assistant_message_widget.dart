@@ -32,7 +32,7 @@ class AssistantMessageWidget extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: profileProvider.isDarkMode
-                      ? Color.fromARGB(255, 47, 44, 44)
+                      ? const Color.fromARGB(255, 47, 44, 44)
                       : const Color.fromARGB(255, 153, 145, 145),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -71,7 +71,7 @@ class AssistantMessageWidget extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Image.asset(
-              'assets/app_logo.png',
+              'assets/robot-assistant.png',
               width: MediaQuery.of(context).size.width * 0.1,
             ),
           ],

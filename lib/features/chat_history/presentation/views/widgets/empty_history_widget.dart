@@ -1,4 +1,5 @@
 import 'package:chat_with_gemini_app/core/provider/chat_provider.dart';
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +8,8 @@ class EmptyHistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
     return InkWell(
       onTap: () {
         // Navigate to chat room
@@ -16,10 +19,14 @@ class EmptyHistoryWidget extends StatelessWidget {
       },
       child: Center(
         child: Container(
-          child: const Text(
+          child: Text(
             'No Found Chat, Start New Chat',
             style: TextStyle(
-              fontSize: 25,
+              fontSize: 22,
+              fontStyle: FontStyle.italic,
+              color: profileProvider.isDarkMode
+                  ? const Color.fromARGB(255, 152, 148, 148)
+                  : Color.fromARGB(255, 97, 95, 95),
             ),
           ),
         ),

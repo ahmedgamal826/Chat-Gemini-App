@@ -11,7 +11,7 @@ class ChatHomeAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-          'assets/app_logo.png',
+          'assets/robot-assistant.png',
           width: MediaQuery.of(context).size.width * 0.12,
         ),
         const SizedBox(width: 10),

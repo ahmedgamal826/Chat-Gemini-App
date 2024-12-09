@@ -3,6 +3,9 @@
 <plist version="1.0">
 <dict>
 
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need your microphone to recognize speech.</string>
+
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This is required to access your photos</string>
 

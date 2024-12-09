@@ -1,8 +1,9 @@
+import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:chat_with_gemini_app/features/splash/data/splash_logic.dart';
 import 'package:chat_with_gemini_app/features/splash/presentation/views/widgets/animated_text.dart';
-import 'package:chat_with_gemini_app/features/splash/presentation/views/widgets/logo_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -12,8 +13,11 @@ class SplashView extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
+    final profileProvider = Provider.of<ProfileProvider>(context);
+
     return Scaffold(
-      backgroundColor: const Color(0xff1E1E1E),
+      backgroundColor:
+          profileProvider.isDarkMode ? const Color(0xff1E1E1E) : Colors.white,
       body: Container(
         child: Center(
           child: Column(

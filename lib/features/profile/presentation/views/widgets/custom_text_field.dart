@@ -48,7 +48,9 @@ Widget CustomTextField(
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: isDarkMode ? Colors.blueAccent : Colors.blue,
+            color: isDarkMode
+                ? Colors.blueAccent
+                : Colors.blueAccent.withOpacity(0.8),
           ),
         ),
         prefixIcon: Icon(
