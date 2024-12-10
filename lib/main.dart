@@ -3,7 +3,6 @@ import 'package:chat_with_gemini_app/features/chat_home/data/services/sound_serv
 import 'package:chat_with_gemini_app/features/profile/data/Providers/profile_provider.dart';
 import 'package:chat_with_gemini_app/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -11,7 +10,6 @@ void main() async {
 
   // init hive
   await ChatProvider.initHive();
-  // await Hive.openBox('userBox'); // فتح صندوق Hive لتخزين بيانات المستخدم
 
   runApp(
     MultiProvider(
