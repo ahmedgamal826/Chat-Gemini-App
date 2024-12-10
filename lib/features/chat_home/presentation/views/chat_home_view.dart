@@ -67,32 +67,31 @@ class _ChatHomeViewState extends State<ChatHomeView> {
             title: const ChatHomeAppBar(),
             actions: [
               if (chatProvider.messagesInChat.isNotEmpty)
-                IconButton(
-                  onPressed: () {
-                    // start new chat
-                    showAnimatedDialog(
-                      title: 'Confirm Addition',
-                      context: context,
-                      description:
-                          'Are you sure you want to start a new chat with gemini?',
-                      onConfirm: () {
-                        setState(() {
-                          // start new chat
-                          chatProvider.prepareChatRoom(
-                            chatId: '',
-                            newChat: true,
-                          );
-                        });
-                      },
-                    );
-                  },
-                  icon: const CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 17,
-                    child: Icon(
-                      Icons.add,
+                Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: IconButton(
+                    onPressed: () {
+                      // start new chat
+                      showAnimatedDialog(
+                        title: 'Confirm Addition',
+                        context: context,
+                        description:
+                            'Are you sure you want to start a new chat with gemini?',
+                        onConfirm: () {
+                          setState(() {
+                            // start new chat
+                            chatProvider.prepareChatRoom(
+                              chatId: '',
+                              newChat: true,
+                            );
+                          });
+                        },
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.edit_square,
                       size: 30,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ),
                 )

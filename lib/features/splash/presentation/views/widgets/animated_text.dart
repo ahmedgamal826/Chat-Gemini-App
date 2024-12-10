@@ -16,12 +16,10 @@ class AnimatedText extends StatelessWidget {
       animatedTexts: [
         TyperAnimatedText(
           'Chat With Gemini',
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
-            color: profileProvider.isDarkMode
-                ? Colors.white
-                : const Color(0xff1E1E1E),
+            color: Colors.blue,
             shadows: [
               Shadow(
                 color: Colors.black26,
