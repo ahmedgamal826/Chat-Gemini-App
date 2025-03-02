@@ -104,34 +104,40 @@ class ChatProvider extends ChangeNotifier {
 
   // gemini-1.0-pro know text and image
   Future<void> setModel({required bool isTextOnly}) async {
-    if (isTextOnly) {
-      _model = _textModel ??
-          GenerativeModel(
-            model: setNewMode(newModel: 'gemini-1.0-pro'),
-            apiKey: ApiService.apiKey,
-            generationConfig: GenerationConfig(
-              // this attributes help model to get the highest probability for the answer
-              temperature: 0.4,
-              topK: 32,
-              topP: 1,
-              maxOutputTokens: 4096,
-            ),
-          );
-    } else {
-      _model = _visionModel ??
-          GenerativeModel(
-            model: 'gemini-1.5-flash',
-            apiKey: ApiService.apiKey,
-            generationConfig: GenerationConfig(
-              temperature: 0.4,
-              topK: 32,
-              topP: 1,
-              maxOutputTokens: 4096,
-            ),
-          );
-    }
+    try {
+      if (isTextOnly) {
+        _model = _textModel ??
+            GenerativeModel(
+              model: setNewMode(newModel: 'gemini-2.0-flash'),
+              apiKey: ApiService.apiKey,
+              generationConfig: GenerationConfig(
+                // this attributes help model to get the highest probability for the answer
+                temperature: 0.4,
+                topK: 32,
+                topP: 1,
+                maxOutputTokens: 4096,
+              ),
+            );
+      } else {
+        _model = _visionModel ??
+            GenerativeModel(
+              model: 'gemini-1.5-flash',
+              apiKey: ApiService.apiKey,
+              generationConfig: GenerationConfig(
+                temperature: 0.4,
+                topK: 32,
+                topP: 1,
+                maxOutputTokens: 4096,
+              ),
+            );
+      }
 
-    notifyListeners();
+      notifyListeners();
+      print("Model set successfully");
+    } catch (e, stacktrace) {
+      print("Error in setModel: $e");
+      print(stacktrace);
+    }
   }
 
   void setCurrentIndex({required int newCurrentIndex}) {
